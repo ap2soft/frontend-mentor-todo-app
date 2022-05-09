@@ -1,7 +1,7 @@
 <script setup>
-import ToDoApp from "./components/ToDoApp.vue";
+import TodoApp from "./components/TodoApp.vue";
 </script>
 
 <template>
-  <ToDoApp />
+  <TodoApp />
 </template>

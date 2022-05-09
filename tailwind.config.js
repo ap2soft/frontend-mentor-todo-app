@@ -6,6 +6,10 @@ module.exports = {
       tablet: "725px",
       desktop: "1440px",
     },
+    fontWeight: {
+      normal: 400,
+      bold: 700,
+    },
     extend: {
       backgroundImage: {
         header: "url('./assets/images/bg-mobile-light.jpg')",
