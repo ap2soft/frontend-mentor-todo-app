@@ -1,5 +1,5 @@
 export const initTodoList = () => {
-  if (localStorage.TodoAppInstalled !== undefined) {
+  if (localStorage.TodoList !== undefined) {
     return;
   }
 
