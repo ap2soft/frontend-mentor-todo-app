@@ -1,13 +1,20 @@
 <script setup>
 import { ref } from "vue";
-import { initTodoList } from "../todoListManager";
+import {
+  initTodoList,
+  getItems,
+  addItem,
+  toggleComplete,
+  deleteItem,
+  clearCompleted,
+} from "../todoListManager";
 import DarkModeSwitch from "./DarkModeSwitch.vue";
 import NewTodo from "./NewTodo.vue";
 import TodoList from "./TodoList.vue";
 
 initTodoList();
 
-const items = ref(JSON.parse(localStorage.TodoList || "[]"));
+const items = ref(getItems());
 
 const filters = [
   { id: "all", name: "All" },
@@ -17,15 +24,29 @@ const filters = [
 
 const currentFilter = ref("all");
 
-const addNew = (newTodo) => {
-  console.log(newTodo);
-  console.log(items);
-  items.value.push({
+const handleAddNew = (newTodo) => {
+  addItem({
     id: Date.now(),
     name: newTodo,
     complete: false,
   });
-  // Store in localStorage
+
+  items.value = getItems();
+};
+
+const handleToggleComplete = (itemId, complete) => {
+  toggleComplete(itemId, complete);
+  items.value = getItems();
+};
+
+const handleDelete = (itemId) => {
+  deleteItem(itemId);
+  items.value = getItems();
+};
+
+const handleClearCompleted = () => {
+  clearCompleted();
+  items.value = getItems();
 };
 </script>
 
@@ -45,11 +66,16 @@ const addNew = (newTodo) => {
     </div>
 
     <div class="mx-auto px-6 tablet:max-w-md tablet:px-0">
-      <NewTodo class="mt-10" @submit="addNew" />
+      <NewTodo class="mt-10" @submit="handleAddNew" />
     </div>
   </header>
   <main class="mx-auto -mt-8 px-6 tablet:max-w-md tablet:px-0">
-    <TodoList :items="items" />
+    <TodoList
+      :items="items"
+      @toggle="handleToggleComplete"
+      @delete="handleDelete"
+      @clear-completed="handleClearCompleted"
+    />
   </main>
   <aside class="mt-4 px-6 tablet:px-6">
     <div

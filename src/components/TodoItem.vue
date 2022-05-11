@@ -34,7 +34,7 @@ watch(complete, (value) => emit("toggle", value));
       />
     </SwitchGroup>
     <button
-      class="hidden- absolute right-4 top-[50%] -mt-2 h-5 w-5 p-1 group-hover:block"
+      class="hidden absolute right-4 top-[50%] -mt-2 h-5 w-5 p-1 group-hover:block"
       @click="emit('delete')"
     >
       <img src="/src/assets/images/icon-cross.svg" alt="Delete Item" />

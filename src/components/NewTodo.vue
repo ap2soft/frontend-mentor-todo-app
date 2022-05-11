@@ -4,14 +4,18 @@ import { ref } from "vue";
 const newTodo = ref("");
 
 const emit = defineEmits(["submit"]);
+const handleSubmit = () => {
+  emit("submit", newTodo.value);
+  newTodo.value = "";
+};
 </script>
 
 <template>
   <div class="relative">
-    <form @submit.prevent="emit('submit', newTodo)">
+    <form @submit.prevent="handleSubmit">
       <input
         type="text"
-        class="w-full rounded-md bg-white py-3 pl-[3.25rem] pr-4 text-sm leading-6 focus:outline-none dark:bg-gray-800"
+        class="w-full rounded-md bg-white py-3 pl-[3.25rem] pr-4 text-sm leading-6 focus:outline-none dark:bg-gray-800 dark:text-white"
         placeholder="Create new todo..."
         v-model="newTodo"
       />
