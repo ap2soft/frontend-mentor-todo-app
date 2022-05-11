@@ -16,7 +16,7 @@ const emit = defineEmits(["filter"]);
 
 <template>
   <div
-    class="mx-auto flex items-center justify-center space-x-4 rounded-md bg-white py-4 dark:bg-gray-800 tablet:max-w-md"
+    class="mx-auto flex items-center justify-center space-x-4 tablet:max-w-md"
   >
     <button
       v-for="filter in filters"

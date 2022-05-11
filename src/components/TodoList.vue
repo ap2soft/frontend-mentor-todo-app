@@ -29,6 +29,10 @@ const emit = defineEmits(["toggle", "delete", "clearCompleted"]);
     <TodoListFooter
       :incomplete-items-count="incompleteItemsCount"
       @clear-completed="emit('clearCompleted')"
-    />
+    >
+      <template #center>
+        <slot name="footer" />
+      </template>
+    </TodoListFooter>
   </div>
 </template>

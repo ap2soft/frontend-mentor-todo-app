@@ -82,9 +82,22 @@ const handleClearCompleted = () => {
       @toggle="handleToggleComplete"
       @delete="handleDelete"
       @clear-completed="handleClearCompleted"
-    />
+    >
+      <template #footer>
+        <Filters
+          class="hidden tablet:block"
+          :current-filter="currentFilter"
+          @filter="currentFilter = $event"
+        />
+      </template>
+    </TodoList>
   </main>
-  <aside class="mt-4 px-6 tablet:px-6">
-    <Filters :current-filter="currentFilter" @filter="currentFilter = $event" />
+  <aside class="mt-4 px-6 tablet:hidden tablet:px-6">
+    <div class="rounded-md bg-white py-4 dark:bg-gray-800">
+      <Filters
+        :current-filter="currentFilter"
+        @filter="currentFilter = $event"
+      />
+    </div>
   </aside>
 </template>
