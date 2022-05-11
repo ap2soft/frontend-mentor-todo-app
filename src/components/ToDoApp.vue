@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import {
   initTodoList,
   getItems,
@@ -11,18 +11,25 @@ import {
 import DarkModeSwitch from "./DarkModeSwitch.vue";
 import NewTodo from "./NewTodo.vue";
 import TodoList from "./TodoList.vue";
+import Filters from "./Filters.vue";
 
 initTodoList();
 
+const currentFilter = ref("all");
+
 const items = ref(getItems());
 
-const filters = [
-  { id: "all", name: "All" },
-  { id: "active", name: "Active" },
-  { id: "completed", name: "Completed" },
-];
+const filteredItems = computed(() => {
+  if (currentFilter.value === "all") {
+    return items.value;
+  }
 
-const currentFilter = ref("all");
+  return items.value.filter(
+    ({ complete }) =>
+      (currentFilter.value === "active" && !complete) ||
+      (currentFilter.value === "completed" && complete)
+  );
+});
 
 const handleAddNew = (newTodo) => {
   addItem({
@@ -71,29 +78,13 @@ const handleClearCompleted = () => {
   </header>
   <main class="mx-auto -mt-8 px-6 tablet:max-w-md tablet:px-0">
     <TodoList
-      :items="items"
+      :items="filteredItems"
       @toggle="handleToggleComplete"
       @delete="handleDelete"
       @clear-completed="handleClearCompleted"
     />
   </main>
   <aside class="mt-4 px-6 tablet:px-6">
-    <div
-      class="mx-auto flex items-center justify-center space-x-4 rounded-md bg-white py-4 dark:bg-gray-800 tablet:max-w-md"
-    >
-      <button
-        v-for="filter in filters"
-        :key="filter.id"
-        class="text-sm font-bold"
-        :class="
-          currentFilter === filter.id
-            ? 'text-blue-500'
-            : 'text-gray-400 hover:text-gray-600'
-        "
-        @click="currentFilter = filter.id"
-      >
-        {{ filter.name }}
-      </button>
-    </div>
+    <Filters :current-filter="currentFilter" @filter="currentFilter = $event" />
   </aside>
 </template>
